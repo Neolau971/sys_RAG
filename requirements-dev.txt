@@ -1,0 +1,6 @@
+-r requirements.txt
+ragas
+datasets
+pandas
+pytest
+pytest-cov

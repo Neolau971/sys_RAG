@@ -1,1 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+
 .env
+
+data/openagenda_raw.json
+data/openagenda_embeddings.json
+data/langchain_faiss/
+data/openagenda_rag_documents.json
+data/openagenda_chunks.json
+data/openagenda_metadata.csv
+
+.pytest_cache/
+.coverage

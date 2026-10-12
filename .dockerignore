@@ -1,6 +1,27 @@
 .venv/
 __pycache__/
 *.py[cod]
+.pytest_cache/
+.coverage
 .git/
+.github/
+.vscode/
+
 .env
-.ipynb_checkpoints/
+.env.*
+!.env.example
+
+tests/
+notebooks/
+monitoring_reports/
+
+# Artéfacts inutiles si tu reconstruis l'index à partir des embeddings
+data/openagenda_raw.json
+data/openagenda_chunks.json
+
+!data/openagenda_embeddings.json
+
+# Garde l'index nécessaire au runtime.
+!data/langchain_faiss/
+!data/langchain_faiss/index.faiss
+!data/langchain_faiss/index.pkl
