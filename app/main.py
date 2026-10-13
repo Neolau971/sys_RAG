@@ -150,7 +150,18 @@ def run_rebuild(app: FastAPI) -> None:
                 }
             )
 
-@app.get("/health")
+@app.get(
+    "/health",
+    summary="Vérifier la disponibilité du service RAG",
+    description=(
+        "Vérifie que l'API est démarrée, que l'index FAISS est chargé "
+        "et que le service RAG est prêt à traiter des questions.\n\n"
+        "Retourne également les modèles utilisés pour la génération "
+        "et les embeddings, ainsi que le nombre de vecteurs indexés."
+    ),
+    response_description="État du service RAG.",
+    tags=["Monitoring"],
+)
 def health() -> dict:
     """Vérifie que l'API et l'index sont chargés."""
     service: RAGService | None = getattr(app.state, "rag_service", None)
@@ -172,6 +183,17 @@ def health() -> dict:
     "/rebuild",
     response_model=RebuildResponse,
     status_code=status.HTTP_202_ACCEPTED,
+    summary="Lancer la reconstruction de l'index FAISS",
+    description=(
+        "Lance la reconstruction asynchrone de l'index LangChain FAISS "
+        "à partir des chunks présents dans `data/openagenda_chunks.json`.\n\n"
+        "Les embeddings Mistral sont générés pendant la reconstruction.\n\n"
+        "Une fois terminée, l'index est sauvegardé puis le service RAG "
+        "est rechargé sans redémarrage de l'API.\n\n"
+        "Si `REBUILD_API_KEY` est définie, la requête doit inclure "
+        "l'en-tête `X-Rebuild-Key`."
+    ),
+    response_description="Reconstruction acceptée et démarrée.",
     tags=["Administration"],
 )
 def rebuild_index(
@@ -216,13 +238,38 @@ def rebuild_index(
 @app.get(
     "/rebuild/status",
     response_model=RebuildStatusResponse,
+    summary="Consulter l'état de la reconstruction",
+    description=(
+        "Retourne l'état de la dernière reconstruction de l'index FAISS.\n\n"
+        "Statuts possibles :\n"
+        "- `idle` : aucune reconstruction en cours.\n"
+        "- `running` : reconstruction en cours.\n"
+        "- `completed` : reconstruction terminée avec succès.\n"
+        "- `failed` : reconstruction échouée."
+    ),
+    response_description="État détaillé de la dernière reconstruction.",
     tags=["Administration"],
 )
 def get_rebuild_status() -> RebuildStatusResponse:
     """Retourne l'état de la dernière reconstruction demandée."""
     return RebuildStatusResponse(**rebuild_state)
 
-@app.post("/ask", response_model=AskResponse)
+@app.post(
+    "/ask",
+    response_model=AskResponse,
+    summary="Poser une question sur les événements indexés",
+    description=(
+        "Reçoit une question en langage naturel et renvoie une réponse "
+        "générée à partir des événements OpenAgenda indexés dans FAISS.\n\n"
+        "Le service applique les filtres métier fournis — ville et période — "
+        "recherche les événements pertinents, puis génère une réponse "
+        "uniquement à partir des contextes récupérés.\n\n"
+        "La réponse inclut les sources utilisées afin de garantir "
+        "la traçabilité des informations citées."
+    ),
+    response_description="Réponse générée et sources associées.",
+    tags=["RAG"],
+)
 def ask(request: AskRequest, fastapi_request: Request) -> AskResponse:
     """
     Reçoit une question JSON et renvoie :
