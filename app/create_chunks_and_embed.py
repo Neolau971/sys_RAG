@@ -141,6 +141,46 @@ def chunk_text(
 
     return chunks
 
+def infer_event_type(
+    title: str,
+    description: str,
+    keywords: str,
+) -> str:
+    """
+    Déduit un type d'événement à partir du titre, de la description
+    et des mots-clés.
+
+    Le résultat est volontairement conservateur : si aucun indice
+    fiable n'est trouvé, on retourne 'événement'.
+    """
+
+    text = " ".join(
+        [
+            title.lower(),
+            description.lower(),
+            keywords.lower(),
+        ]
+    )
+
+    rules = [
+        ("exposition", ["exposition", "exposition collective", "rétrospective"]),
+        ("visite guidée", ["visite guidée", "visite commentée", "visite libre"]),
+        ("atelier", ["atelier", "ateliers"]),
+        ("conférence", ["conférence", "conférences", "rencontre", "table ronde"]),
+        ("concert", ["concert", "live", "tournée", "scène"]),
+        ("spectacle", ["spectacle", "théâtre", "pièce de théâtre", "danse"]),
+        ("festival", ["festival", "festival de"]),
+        ("marché", ["marché", "pop-up market", "salon"]),
+        ("projection", ["projection", "cinéma", "film"]),
+        ("formation", ["formation", "job dating", "recrute", "s'informer"]),
+    ]
+
+    for event_type, indicators in rules:
+        if any(indicator in text for indicator in indicators):
+            return event_type
+
+    return "événement"
+
 def build_event_text(doc: dict) -> str:
     metadata = doc.get("metadata", {})
     page_content = doc.get("page_content", "")
@@ -166,8 +206,15 @@ def build_event_text(doc: dict) -> str:
     )
     url = metadata.get("source_url") or "Non disponible"
 
+    event_type = infer_event_type(
+        title=title,
+        description=description,
+        keywords=categories,
+    )
+
     return (
         f"Titre : {title}\n"
+        f"Type : {event_type}\n"
         f"Ville : {city}\n"
         f"Date de début : {date_from}\n"
         f"Date de fin : {date_to}\n"
@@ -231,6 +278,12 @@ def build_chunks(documents: list[dict]) -> list[dict]:
         )
         url = metadata.get("source_url") or ""
 
+        event_type = infer_event_type(
+        title=title,
+        description=extract_description_from_page_content(page_content),
+        keywords=keywords,
+)
+
         for chunk_index, text in enumerate(text_chunks):
             all_chunks.append(
                 {
@@ -240,6 +293,7 @@ def build_chunks(documents: list[dict]) -> list[dict]:
                     "metadata": {
                         "event_id": str(doc_id),
                         "title": title,
+                        "event_type": event_type,
                         "city": city,
                         "date_from": date_from,
                         "date_to": date_to,
