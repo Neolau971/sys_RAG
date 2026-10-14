@@ -1,0 +1,176 @@
+[
+    {
+        "id": "photo_lucien_herve",
+        "question": "Existe-t-il une exposition de photographie consacrée à Lucien Hervé à Montpellier ?",
+        "city": "Montpellier",
+        "k": 5,
+        "ground_truth": "Oui. L’exposition « Lucien Hervé. Dialogue avec le Soleil » est prévue au Pavillon Populaire de Montpellier du 9 décembre 2026 au 11 avril 2027."
+    },
+    {
+        "id": "photo_exhibition_2026",
+        "question": "Existe-t-il une exposition de photographie à Montpellier en 2026 ?",
+        "city": "Montpellier",
+        "k": 5,
+        "ground_truth": "Oui. L’exposition « Lucien Hervé. Dialogue avec le Soleil » se tient à Montpellier du 9 décembre 2026 au 11 avril 2027."
+    },
+    {
+        "id": "rap_hip_hop_2027",
+        "question": "Quels concerts de rap ou hip-hop sont prévus à Montpellier en 2027 ?",
+        "city": "Montpellier",
+        "date_from": "2027-01-01",
+        "date_to": "2027-12-31",
+        "k": 5,
+        "ground_truth": "Les concerts de rap ou hip-hop prévus à Montpellier en 2027 comprennent notamment ASSASSIN le 9 avril 2027, TYPHEE le 4 mars 2027, JEANJASS le 19 février 2027 et KEMMLER le 17 février 2027."
+    },
+    {
+        "id": "concert_2027_04_09",
+        "question": "Quels événements ont lieu à Montpellier le 9 avril 2027 ?",
+        "city": "Montpellier",
+        "date_from": "2027-04-09",
+        "date_to": "2027-04-09",
+        "k": 5,
+        "ground_truth": "Le concert « ASSASSIN (official) » a lieu à Montpellier le 9 avril 2027."
+    },
+    {
+        "id": "concert_2027_02_19",
+        "question": "Quels événements ont lieu à Montpellier le 19 février 2027 ?",
+        "city": "Montpellier",
+        "date_from": "2027-02-19",
+        "date_to": "2027-02-19",
+        "k": 5,
+        "ground_truth": "Le concert « JEANJASS » a lieu à Montpellier le 19 février 2027."
+    },
+    {
+        "id": "concert_2027_03_25",
+        "question": "Quels événements ont lieu à Montpellier le 25 mars 2027 ?",
+        "city": "Montpellier",
+        "date_from": "2027-03-25",
+        "date_to": "2027-03-25",
+        "k": 5,
+        "ground_truth": "Le concert « PONY PONY RUN RUN - Le Rockstore » a lieu à Montpellier le 25 mars 2027."
+    },
+    {
+        "id": "concert_2027_03_06",
+        "question": "Quels événements ont lieu à Montpellier le 6 mars 2027 ?",
+        "city": "Montpellier",
+        "date_from": "2027-03-06",
+        "date_to": "2027-03-06",
+        "k": 5,
+        "ground_truth": "Les événements prévus à Montpellier le 6 mars 2027 incluent « LES WRIGGLES » et « L'Atelier Nebout // Lieux et Liens »."
+    },
+    {
+        "id": "concert_2027_03",
+        "question": "Quels concerts ont lieu à Montpellier en mars 2027 ?",
+        "city": "Montpellier",
+        "date_from": "2027-03-01",
+        "date_to": "2027-03-31",
+        "k": 5,
+        "ground_truth": "Les concerts à Montpellier en mars 2027 comprennent notamment « PONY PONY RUN RUN - Le Rockstore » le 25 mars 2027, « ASSASSIN (official) » le 9 avril 2027 n’est pas en mars, « LES WRIGGLES » le 6 mars 2027 et « TYPHEE + première partie » le 4 mars 2027."
+    },
+    {
+        "id": "photo_archives_2026",
+        "question": "Quels événements liés à la photographie sont proposés par les Archives départementales de l'Hérault à Montpellier ?",
+        "city": "Montpellier",
+        "k": 5,
+        "ground_truth": "Les Archives départementales de l'Hérault proposent notamment « Disparition(s) ! Présentation de documents d'archives », « Atelier cyanotype : la magie du bleu » et « Visite guidée : les trésors photographiques de Archives »."
+    },
+    {
+        "id": "event_2026_09_17",
+        "question": "Quels événements ont lieu à Montpellier le 17 septembre 2026 ?",
+        "city": "Montpellier",
+        "date_from": "2026-09-17",
+        "date_to": "2026-09-17",
+        "k": 5,
+        "ground_truth": "L’événement « Disparition(s) ! Présentation de documents d'archives » couvre le 17 septembre 2026 à Montpellier."
+    },
+    {
+        "id": "event_2026_09_26",
+        "question": "Quels événements ont lieu à Montpellier le 26 septembre 2026 ?",
+        "city": "Montpellier",
+        "date_from": "2026-09-26",
+        "date_to": "2026-09-26",
+        "k": 5,
+        "ground_truth": "L’événement « En déséquilibre / في اختلال التوازن - Mohamed Lekleti » couvre le 26 septembre 2026 à Montpellier."
+    },
+    {
+        "id": "event_2026_10_10",
+        "question": "Quels événements ont lieu à Montpellier le 10 octobre 2026 ?",
+        "city": "Montpellier",
+        "date_from": "2026-10-10",
+        "date_to": "2026-10-10",
+        "k": 5,
+        "ground_truth": "L’événement « Visite guidée : les trésors photographiques de Archives » couvre le 10 octobre 2026 à Montpellier."
+    },
+    {
+        "id": "event_2027_02_15",
+        "question": "Quels événements ont lieu à Montpellier le 15 février 2027 ?",
+        "city": "Montpellier",
+        "date_from": "2027-02-15",
+        "date_to": "2027-02-15",
+        "k": 5,
+        "ground_truth": "L’événement « Atelier Sénior 360 » couvre le 15 février 2027 à Montpellier."
+    },
+    {
+        "id": "event_2027_01_15",
+        "question": "Quels événements ont lieu à Montpellier le 15 janvier 2027 ?",
+        "city": "Montpellier",
+        "date_from": "2027-01-15",
+        "date_to": "2027-01-15",
+        "k": 5,
+        "ground_truth": "L’événement « II. CHROME Montpellier » couvre le 15 janvier 2027 à Montpellier."
+    },
+    {
+        "id": "event_2027_10_09",
+        "question": "Quels événements ont lieu à Montpellier le 9 octobre 2027 ?",
+        "city": "Montpellier",
+        "date_from": "2027-10-09",
+        "date_to": "2027-10-09",
+        "k": 5,
+        "ground_truth": "Le concert « JOK'AIR à la Sud de France Arena de Montpellier » a lieu à Montpellier le 9 octobre 2027."
+    },
+    {
+        "id": "concert_2027_spring",
+        "question": "Quels concerts de musique sont prévus à Montpellier au printemps 2027 ?",
+        "city": "Montpellier",
+        "date_from": "2027-03-20",
+        "date_to": "2027-06-20",
+        "k": 5,
+        "ground_truth": "Le concert « PONY PONY RUN RUN - Le Rockstore » a lieu à Montpellier le 25 mars 2027."
+    },
+    {
+        "id": "event_2027_03_08",
+        "question": "Quels événements ont lieu à Montpellier le 8 mars 2027 ?",
+        "city": "Montpellier",
+        "date_from": "2027-03-08",
+        "date_to": "2027-03-08",
+        "k": 5,
+        "ground_truth": "L’événement « Exposition collective - Comme une forme commune » couvre le 8 mars 2027 à Montpellier."
+    },
+    {
+        "id": "event_2026_09_19",
+        "question": "Quels événements ont lieu à Montpellier le 19 septembre 2026 ?",
+        "city": "Montpellier",
+        "date_from": "2026-09-19",
+        "date_to": "2026-09-19",
+        "k": 5,
+        "ground_truth": "L’événement « Atelier cyanotype : la magie du bleu » couvre le 19 septembre 2026 à Montpellier."
+    },
+    {
+        "id": "event_2026_10_14",
+        "question": "Quels événements ont lieu à Montpellier le 14 octobre 2026 ?",
+        "city": "Montpellier",
+        "date_from": "2026-10-14",
+        "date_to": "2026-10-14",
+        "k": 5,
+        "ground_truth": "L’événement « L'Atelier Nebout // Lieux et Liens » couvre le 14 octobre 2026 à Montpellier."
+    },
+    {
+        "id": "event_2027_02_06",
+        "question": "Quels événements ont lieu à Montpellier le 6 février 2027 ?",
+        "city": "Montpellier",
+        "date_from": "2027-02-06",
+        "date_to": "2027-02-06",
+        "k": 5,
+        "ground_truth": "Le concert « BAMBY » a lieu à Montpellier le 6 février 2027."
+    }
+]

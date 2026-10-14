@@ -12,7 +12,11 @@ from langchain_core.documents import Document
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_mistralai import ChatMistralAI, MistralAIEmbeddings
+from sentence_transformers import CrossEncoder
 
+RETRIEVAL_K = 20
+GENERATION_K = 8
+RERANKER_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
 @dataclass(frozen=True)
 class SearchFilters:
@@ -45,7 +49,7 @@ class RAGService:
         faiss_folder: Path,
         embedding_model: str = "mistral-embed",
         chat_model: str = "mistral-small-2603",
-        candidate_multiplier: int = 20,
+        candidate_multiplier: int = 10,
     ) -> None:
         project_root = Path(__file__).resolve().parents[1]
         load_dotenv(project_root / ".env")
@@ -69,6 +73,11 @@ class RAGService:
             str(faiss_folder),
             self.embeddings,
             allow_dangerous_deserialization=True,
+        )
+
+        self.reranker = CrossEncoder(
+            RERANKER_MODEL,
+            max_length=512,
         )
 
         self.llm = ChatMistralAI(
@@ -316,7 +325,7 @@ class RAGService:
         question: str,
         k: int,
         filters: SearchFilters,
-        generation_k: int = 5,
+        generation_k: int = GENERATION_K,
     ) -> list[Document]:
         candidate_k = min(
             max(k * self.candidate_multiplier, k),
@@ -342,7 +351,11 @@ class RAGService:
         unique_documents = self.deduplicate_by_event(filtered_documents)
 
         if unique_documents:
-            return unique_documents[:k]
+            return self.rerank_documents(
+                question=question,
+                documents=unique_documents,
+                top_n=generation_k,
+        )
 
         # Fallback : recherche par période lorsque la recherche
         # vectorielle ne trouve pas les bons documents.
@@ -353,7 +366,42 @@ class RAGService:
 
         unique_date_documents = self.deduplicate_by_event(date_documents)
 
-        return unique_date_documents[:k]
+        return self.rerank_documents(
+            question=search_query,
+            documents=unique_date_documents,
+            top_n=generation_k,
+        )
+
+    def rerank_documents(
+        self,
+        question: str,
+        documents: list[Document],
+        top_n: int,
+    ) -> list[Document]:
+        """
+        Réordonne les documents candidats selon leur pertinence
+        par rapport à la question.
+
+        Le cross-encoder reçoit chaque paire (question, contenu du document),
+        calcule un score de pertinence, puis trie les documents.
+        """
+        if not documents:
+            return []
+
+        passages = [document.page_content for document in documents]
+
+        scores = self.reranker.predict(
+            [(question, passage) for passage in passages],
+            show_progress_bar=False,
+        )
+
+        scored_documents = sorted(
+            zip(documents, scores),
+            key=lambda pair: pair[1],
+            reverse=True,
+        )
+
+        return [document for document, _ in scored_documents[:top_n]]
 
     # -------------------------------------------------
     # Génération et formatage de la réponse
@@ -417,9 +465,9 @@ class RAGService:
 
         documents = self.retrieve_documents(
             question=question,
-            k=k,
+            k=RETRIEVAL_K,
             filters=filters,
-            generation_k=5,
+            generation_k=GENERATION_K,
         )
 
         contexts = [document.page_content for document in documents]
@@ -618,9 +666,9 @@ class RAGService:
 
         documents = self.retrieve_documents(
             question=question,
-            k=k,
+            k=RETRIEVAL_K,
             filters=filters,
-            generation_k=5,
+            generation_k=GENERATION_K,
         )
 
         if not documents:
